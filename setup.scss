@@ -1,0 +1,423 @@
+$timer: 400s;
+
+$none: rgba(#fff,0);
+$light: #fcf6a5;
+$sun: #ff7700;
+$base: #bc2f2f;
+$shadow: #4f010e;
+$smoke: #252529;
+$smoke2: #6f6f7a;
+$sky: #608b88;
+$stone: #a19372;
+$tre1: #683f44;
+$tre2: #20112a;
+
+.house.row3:checked, .shed.row3:checked {
+    & ~ div {
+        filter: hue-rotate(-20deg);
+    }
+}
+
+.house.row2:checked, .shed.row2:checked {
+    & ~ div {
+        filter: hue-rotate(-35deg);
+    }
+}
+
+.house.row1:checked, .shed.row1:checked {
+    & ~ div {
+        filter: hue-rotate(-50deg);
+    }
+}
+
+$r1: adjust-hue($base, random(50) + 5);
+$r15: adjust-hue($base, random(50) + 10);
+$r2: adjust-hue($base, random(50) - 30);
+$r3: darken($r2,20%);
+$r4: adjust-hue($base, random(50) + 50);
+$r41: adjust-hue($base, random(50) + 51);
+$r42: adjust-hue($base, random(50) + 49);
+$r43: darken($r42,10%);
+$shadow: rgba($shadow,.75);
+$ls: rgba($shadow,.3);
+$ds: rgba($shadow,.9);
+$dark: darken($r2,20%);
+$background: lighten($base,42%);
+$b1: lighten($base,4%);
+$b2: lighten($r1,4%);
+$b3: lighten($r2,4%);
+$s1: lighten($stone,4%);
+$sd: darken($stone,10%);
+
+$tre3: lighten($tre1,10%);
+$vls: rgba($tre1,.1);
+
+html {
+    font-size: .97vh;
+    width: 100%;
+    height: 100%;
+    background: $background;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba($sky,.5),rgba(#fff,.75), $none);
+    box-shadow: inset 0 0 5rem 0 $smoke;
+
+    &, *, *:before, *:after {
+        display: block;
+        top: 0;
+        left: 0;
+        box-sizing: border-box;
+        position: absolute;
+        content: '';
+    }
+}
+
+div, house, shed, hbtn, sbtn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 50rem;
+    height: 50rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+    label {
+        width: calc(50rem/4);
+        height: calc(50rem/4);
+        position: relative;
+        border: none;
+        background: none;
+        padding: 0;
+        margin: 0;
+        display: inline;
+        cursor: pointer;
+        box-shadow: 0 0 0 2rem $none;
+        /*  transition: all .15s cubic-bezier(0, 0.7, 0.5, 1);*/
+        /* transition: box-shadow .15s cubic-bezier(0, 0.7, 0.5, 1);*/
+        *, *:before, *:after {
+            transform: translate3d(0,0,0);
+            z-index: 1;
+            left: 0;
+            top: 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+            pointer-events: none;
+        }
+
+        & > i:nth-of-type(1) {
+            &:before, &:after {
+                filter: blur(.5rem);
+                border: 1rem solid rgba($smoke2,.75);
+                width: 5rem;
+                height: 5rem;
+                background: $smoke2;
+                opacity: 0;
+                border-radius: 50%;
+                box-shadow: 2rem -1.5rem 0 1rem rgba($smoke2,.75), //
+                3rem -2rem 0 1.5rem rgba($smoke2,.5);
+            }
+        }
+    }
+}
+
+colour {
+    width: 100%;
+    height: 100%;
+
+    input, br {
+        position: relative;
+        display: inline-block;
+        opacity: .2;
+        top: 1rem;
+        left: 1rem;
+        transform: scale(.75);
+        margin: -.2rem;
+
+        @media (max-width: 900px) {
+            display: none;
+        }
+    }
+
+    input:checked {
+        opacity: 1;
+    }
+
+    br {
+        display: block;
+    }
+}
+
+input {
+    display: none;
+}
+
+div.main {
+    -webkit-box-reflect: below 4rem;
+}
+
+div.ss {
+    pointer-events: none;
+}
+
+sbtn {
+    height: calc(50rem - (50rem / 4));
+    bottom: auto;
+
+    label {
+        border: solid 1px rgba(#747474,.1);
+
+        &:nth-of-type(1) {
+            border-radius: 3rem 0 0 0;
+        }
+
+        &:nth-of-type(4) {
+            border-radius: 0 3rem 0 0;
+        }
+
+        &:hover {
+            border-color: #555;
+        }
+    }
+}
+
+hbtn label:nth-of-type(n+12) {
+    border: solid 1px rgba(#747474,.1);
+
+    &:hover {
+        border-color: #555;
+    }
+}
+
+@keyframes smoke {
+    0% {
+        transform: scale(.2) translate3d(0,0,0) rotate(-15deg);
+        opacity: .075;
+    }
+
+    50% {
+        transform: scale(1) translate3d(2rem,-4rem,0) rotate(0);
+        opacity: .15;
+    }
+
+    100% {
+        transform: scale(2) translate3d(5rem,-5rem,0) rotate(10deg);
+        opacity: 0;
+    }
+}
+
+//pretty
+island {
+    position: absolute;
+    top: 76rem;
+    top: 49.25rem;
+    left: -50%;
+    right: -50%;
+    margin: auto;
+    width: 80rem;
+    height: 5rem;
+    background: $r42;
+    border-radius: 55% 55% 45% 45%;
+}
+
+grass {
+    position: absolute;
+    z-index: 500;
+    top: 76rem;
+    top: 49.25rem;
+    left: -50%;
+    right: -50%;
+    margin: auto;
+    width: 80rem;
+    height: 5rem;
+    -webkit-box-reflect: below -5rem;
+    transform: skewX(0);
+
+    &:after, &:before {
+        top: .75rem;
+        left: .6rem;
+        z-index: 100;
+        width: .5rem;
+        height: 1.75rem;
+        transform: skewY(60deg);
+        background: $r42;
+        box-shadow: 1rem -1.6rem 0 $r42, //
+        2.1rem -3.6rem 0 $r42, //
+        2.9rem -4.8rem 0 $r42, //
+        4rem -7rem 0 $r42;
+        filter: drop-shadow(5rem -8.3rem 0 $r42) //
+        drop-shadow(10rem -17.3rem 0 $r42) //
+        drop-shadow(20rem -34.5rem 0 $r42) //
+        drop-shadow(40rem -69rem 0 $r42)
+    }
+
+    &:before {
+        transform: skewY(-60deg);
+        box-shadow: 1rem 1.6rem 0 $r42, //
+        2.1rem 3.6rem 0 $r42, //
+        2.9rem 4.8rem 0 $r42, //
+        4rem 7rem 0 $r42;
+        filter: drop-shadow(5rem 8.3rem 0 $r42) //
+        drop-shadow(10rem 17.3rem 0 $r42) //
+        drop-shadow(20rem 34.5rem 0 $r42) //
+        drop-shadow(40rem 69rem 0 $r42);
+        left: 0;
+        top: 1.5rem;
+    }
+}
+
+@keyframes grass {
+    100% {
+        transform: skewX(5deg);
+    }
+}
+
+input:focus ~ div > div {
+    animation: thud .1s linear;
+}
+
+@keyframes thud {
+    0% {
+        transform: translate3d(0,1rem,0);
+    }
+
+    60% {
+        transform: translate3d(0,-.5rem,0);
+    }
+
+    80% {
+        transform: translate3d(0,.25rem,0);
+    }
+}
+
+sig {
+    z-index: 500;
+    opacity: .2;
+
+    &, * {
+        height: 9.25em;
+        overflow: hidden;
+        border-radius: .5em;
+    }
+
+    font-size: .5rem;
+    color: #000;
+    width: 10em;
+    top: auto;
+    left: auto;
+    bottom: 1em;
+    right: 1em;
+    transform: skewX(10deg) scaleY(.45) rotate(2deg);
+
+    &:before, *:before {
+        width: 5em;
+        height: 5em;
+        background: currentColor;
+        transform: translate3d(-2.5em,0,0) rotate(-45deg);
+        box-shadow: -3em 3em 0 0 currentColor;
+        border-radius: .5em 2em .5em 2em;
+    }
+
+    * {
+        width: 5em;
+        transform: translate3d(3.75em,0,0) scaleY(.95);
+        display: block !important;
+
+        &:before {
+            transform: translate3d(-3em,-2em,0) rotate(-45deg);
+            box-shadow: -3em 3em 0 0 currentColor, -6em 6em 0 0 currentColor;
+            border-radius: .5em;
+        }
+    }
+}
+
+text {
+    width: 95%;
+    max-width: 70rem;
+    bottom: 25%;
+    color: lighten($r1,30%);
+    right: 0;
+    margin: auto;
+    height: 1rem;
+    font-size: 2.5rem;
+    text-align: center;
+    font-family: Telefon,Sans-Serif;
+    z-index: -1;
+    transform: scale(0);
+    font-weight: 100;
+    letter-spacing: .1rem;
+    opacity: 0;
+
+    welldone, gameover {
+        box-shadow: 0 0 5rem $sun, inset 0 0 0 .5rem #fff;
+        background: rgba($tre2,.95);
+        padding: 5rem;
+        border-radius: 5rem;
+        border: 1rem solid $tre2;
+    }
+
+    welldone {
+        display: none;
+    }
+
+    & * {
+        position: static;
+    }
+
+    p:nth-of-type(1) {
+        font-size: 4rem;
+    }
+
+    p:nth-of-type(odd) {
+        color: $r2;
+    }
+
+    label {
+        position: absolute;
+        left: auto;
+        right: 3rem;
+        top: 3rem;
+        color: $r2;
+        padding: 2rem;
+        border-radius: 2rem;
+        box-shadow: 0 0 1rem $none;
+        cursor: pointer;
+        transition: box-shadow .25s ease-in-out;
+        box-sizing: border-box;
+        line-height: 1;
+
+        &:hover, &:focus {
+            box-shadow: 0 0 .15rem #fff;
+        }
+    }
+
+    a {
+        padding: .5rem 1rem;
+        border-radius: 1rem;
+        text-decoration: none;
+        background: $r2;
+        color: $tre2;
+        box-shadow: 0 0 0 1rem $none, inset 0 0 0 0 rgba(#fff,.2);
+        transition: all .2s ease-in-out;
+
+        &:hover, &:focus {
+            box-shadow: 0 0 0 0 rgba(#fff,.2), inset 0 0 0 3rem rgba(#fff,.2);
+        }
+    }
+}
+
+#done:checked ~ text {
+    transform: scale(0) !important;
+    transition: all .5s ease-in-out;
+    opacity: 0;
+}

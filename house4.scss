@@ -1,0 +1,864 @@
+//house
+
+div > div > house > label {
+    & > i:nth-of-type(5) {
+        width: 13rem;
+        height: 3rem;
+        top: 1rem;
+        border-bottom-color: $tre1;
+        box-shadow: 0 .25rem 0 $tre1;
+        border-radius: 50%;
+        left: -.5rem;
+        z-index: 1;
+        display: none;
+
+        &:after {
+            border: 0.5rem solid $none;
+            border-top: 1rem solid $r1;
+            top: 2.75rem;
+            left: 1rem;
+            transform: rotate(5deg);
+            z-index: -1 !important;
+            filter: drop-shadow(2rem .25rem 0 $r2) drop-shadow(2rem 0rem 0 $r1);
+        }
+
+        &:before {
+            border: .5rem solid $none;
+            border-top: 1rem solid $r4;
+            top: 3.25rem;
+            left: 7rem;
+            transform: rotate(-5deg);
+            z-index: -1 !important;
+            filter: drop-shadow(2rem -.25rem 0 $r2) drop-shadow(2rem 0rem 0 $r1);
+        }
+    }
+}
+
+$row: 1, 2, 3, 4;
+
+@each $i in $row {
+    $col: 1, 2, 3, 4;
+
+    @each $x in $col {
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                //back
+                &:before {
+                    width: 1.5rem;
+                    height: 1rem;
+                    background: currentColor;
+                    border-radius: .25rem;
+                    top: -1.35rem;
+                    left: 3rem;
+                    box-shadow: 2rem 2rem 0 currentColor;
+                    filter: hue-rotate(-10deg) brightness(1.1);
+                    opacity: .7;
+                }
+                //bricks
+                &:after {
+                    filter: hue-rotate(-10deg) brightness(1.1);
+                    width: 2rem;
+                    height: 1rem;
+                    background: currentColor;
+                    border-radius: .25rem;
+                    top: .5rem;
+                    left: -.15rem;
+                    box-shadow: 0 2rem 0 currentColor, //
+                    0 4rem 0 currentColor, //
+                    0 6rem 0 currentColor, //
+                    0 8rem 0 currentColor, //
+                    0 10rem 0 currentColor, //
+                    //
+                    10.75rem 0 0 currentColor, //
+                    10.75rem 2rem 0 currentColor, //
+                    10.75rem 4rem 0 currentColor, //
+                    10.75rem 6rem 0 currentColor, //
+                    10.75rem 8rem 0 currentColor, //
+                    10.75rem 10rem 0 currentColor;
+                }
+                //window
+                & > i:nth-of-type(4) {
+                    //window
+                    width: 5rem;
+                    right: 0;
+                    margin: auto;
+                    top: 3.5rem;
+                    background: $ds;
+                    height: 5rem;
+                    border-radius: .3rem;
+                    box-shadow: inset 0 0 0 .5rem $ls, //
+                    inset 0 0 .5rem $ds, //
+                    inset 0 0 0 .5rem currentColor, //
+                    inset 0 0 1rem 1rem $ds, //
+                    inset 1rem 0 0 $r1, //
+                    inset -1.25rem 0 0 $r1, //
+                    inset 0 -2rem 0 #000, //
+                    inset 0 -3.5rem 0 $tre2;
+
+                    &:after {
+                        width: 4.5rem;
+                        height: .25rem;
+                        left: .25rem;
+                        top: 2.4rem;
+                        background: currentColor;
+                        border-radius: .0001rem;
+                        box-shadow: inset 0 0 0 .5rem $ls, //
+                        0 3rem 0 .3rem lighten($r15,20%), //
+                        0 3.5rem .35rem .25rem $ds;
+                    }
+
+                    &:before {
+                        width: .25rem;
+                        height: 4.5rem;
+                        left: 2.4rem;
+                        top: .25rem;
+                        background: currentColor;
+                        box-shadow: inset 0 0 0 .5rem $ls;
+                    }
+                }
+                //random window
+                &.col#{random(4)} > i:nth-of-type(4) {
+                    border-radius: 2.25rem 2.25rem .3rem .3rem;
+                }
+                //roof
+                & > i:nth-of-type(2) {
+                    border: solid $none 1rem;
+                    border-bottom: solid $r3 4rem;
+                    width: calc(100% + 2.1rem);
+                    left: -1rem;
+                    top: -2.5rem;
+                    box-shadow: 0 .25rem 0 $tre2, 0 1.5rem 1rem -1rem $shadow;
+
+                    &:before {
+                        width: 100%;
+                        height: 3rem;
+                        border-radius: 50%;
+                        background: repeating-linear-gradient( $none, $none .75rem, rgba($ds,.4), $none 1rem);
+                    }
+                    //chimney
+                    &:after {
+                        width: 3rem;
+                        height: 4rem;
+                        border: .5rem solid $none;
+                        border-top: .5rem solid $base;
+                        top: -2rem;
+                        box-shadow: inset 0 4rem 0 $base, //
+                        0 -.5rem 0 -.2rem $dark, //
+                        0 -3rem 0 -1rem $smoke;
+                        border-radius: .5rem;
+                        left: -.25rem;
+                        filter: drop-shadow(-.25rem 2rem .5rem rgba(#000,.15));
+                    }
+                }
+                //smoke
+                & > i:nth-of-type(1) {
+                    &:before, &:after {
+                        top: -8.5rem;
+                        left: -1rem;
+                        animation: smoke 8s linear infinite;
+                    }
+
+                    &:before {
+                        animation: smoke 7.25s 3.75s linear infinite;
+                    }
+                }
+
+                &:nth-of-type(even) {
+                    i:nth-of-type(2):after {
+                        left: 9.5rem;
+                    }
+                    //smoke
+                    & > i:nth-of-type(1) {
+                        left: 10rem;
+                    }
+                }
+            }
+            //no roof
+            div > div > house > .row#{$i + 1}.col#{$x} {
+                i:nth-of-type(2), i:nth-of-type(1) {
+                    display: none;
+                }
+            }
+        }
+
+        //shedhouse
+        .hs.house.row#{$i + 1}.col#{$x}:checked ~
+        .hs.shed.row#{$i}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                border-bottom: .25rem dashed $base;
+            }
+
+            div > div > house > .row#{$i + 1}.col#{$x} {
+                &:before {
+                    background: $r1;
+                }
+            }
+        }
+
+        .hs.shed.row#{$i + 1}.col#{$x}:checked ~
+        .hs.house.row#{$i}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                border-bottom: .25rem dashed $r1;
+            }
+
+            div > div > house > .row#{$i + 1}.col#{$x} {
+                &:before {
+                    background: $base;
+                }
+            }
+        }
+        //chimney
+        .hs.house.row#{$i}.col#{$x - 3}:not(:checked) ~ .hs.house.row#{$i}.col#{$x}:checked ~ .hs.house.row#{$i}.col#{$x + 1}:not(:checked) ~ .hs.house.row#{$i - 2}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                & > i:nth-of-type(2):after {
+                    //chimney
+                    left: 9.5rem;
+                }
+                //smoke
+                & > i:nth-of-type(1) {
+                    left: 11rem;
+                }
+            }
+        }
+        //center chimney
+        .hs.row#{$i - 1}.col#{$x - 1}:checked ~ .hs.row#{$i - 1}.col#{$x}:not(:checked) ~,
+        .hs.house.row#{$i - 1}.col#{$x}:not(:checked) ~ .hs.house.row#{$i - 2}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                & > i:nth-of-type(2):after {
+                    //chimney
+                    left: 4.75rem;
+                    height: 3rem;
+                    box-shadow: inset 0 6rem 0 $base, //
+                    0 -.5rem 0 -.2rem $dark, //
+                    0 -2.25rem 0 -1rem $smoke;
+                    border-radius: 0 0 1rem 1rem;
+                }
+                //smoke
+                & > i:nth-of-type(1) {
+                    left: 5rem;
+                }
+            }
+        }
+        //small roof
+        .hs.row#{$i}.col#{$x - 1}:checked ~ .hs.row#{$i}.col#{$x}:checked ~ .hs.house.row#{$i - 1}.col#{$x - 1}:not(:checked) ~ .hs.shed.row#{$i - 1}.col#{$x - 1}:not(:checked) ~ .hs.row#{$i - 1}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                i:nth-of-type(2) {
+                    display: block;
+                    left: -42%;
+                    width: 50%;
+                }
+
+                i:nth-of-type(1), i:nth-of-type(2):after {
+                    display: none;
+                }
+            }
+        }
+        // no chimney
+
+        .row#{$i}.col2:checked ~ .row#{$i}.col3:checked ~ {
+            div > div > house > .row#{$i}.col2 {
+                i:nth-of-type(1), i:nth-of-type(2):after {
+                    display: none;
+                }
+            }
+
+            div > div > house > .row#{$i}.col3 {
+                & > i:nth-of-type(2):after {
+                    //chimney
+                    left: -1.5rem;
+                }
+                //smoke
+                & > i:nth-of-type(1) {
+                    left: -1rem;
+                }
+            }
+        }
+    }
+}
+
+/////////////////////////////
+
+@each $i in $row {
+    $col: 1,2, 3,4;
+
+    @each $x in $col {
+        //bunting
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.house.row#{$i}.col#{$x + 1}:not(:checked) ~ .hs.row#{$i}.col#{$x + 2}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x + 1} {
+                & > i:nth-of-type(5) {
+                    display: block;
+                    width: 105%;
+                }
+            }
+        }
+        //house to shed bunting
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.house.row#{$i}.col#{$x + 1}:not(:checked) ~ .hs.shed.row#{$i}.col#{$x + 2}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x + 1} {
+                & > i:nth-of-type(5) {
+                    display: block;
+                    width: 115%;
+                }
+            }
+        }
+    }
+
+    //bunting
+    $col: 1,2,3,4;
+
+    @each $x in $col {
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.house.row#{$i}.col#{$x + 1}:not(:checked) ~ .hs.house.row#{$i}.col#{$x + 2}:not(:checked) ~ .hs.row#{$i}.col#{$x + 3}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x + 1} {
+                & > i:nth-of-type(5) {
+                    display: block;
+                    width: 205%;
+
+                    &:after {
+                        border: .5rem solid $none;
+                        border-top: 1rem solid $r1;
+                        top: 2.75rem;
+                        left: 3.5rem;
+                        transform: rotate(4deg);
+                        z-index: -1 !important;
+                        filter: drop-shadow(2.5rem .1rem 0 $r2) drop-shadow(5rem 0 0 $r1);
+                    }
+
+                    &:before {
+                        border: .5rem solid $none;
+                        border-top: 1rem solid $r4;
+                        top: 3.25rem;
+                        left: 13.5rem;
+                        transform: rotate(-4deg);
+                        z-index: -1 !important;
+                        filter: drop-shadow(2.5rem -.1rem 0 $r2) drop-shadow(5rem 0 0 $r1);
+                    }
+                }
+            }
+        }
+
+        //bricks
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i}.col#{$x + 1}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                //bricks
+                &:after {
+                    box-shadow: 0 2rem 0 currentColor, //
+                    0 4rem 0 currentColor, //
+                    0 6rem 0 currentColor, //
+                    0 8rem 0 currentColor, //
+                    0 10rem 0 currentColor;
+                }
+            }
+        }
+
+        //fixed
+        .hs.row#{$i}.col#{$x - 1}:checked ~ {
+            .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i}.col#{$x + 1}:checked ~ {
+                div > div > house > .row#{$i}.col#{$x} {
+                    //bricks
+                    &:after {
+                        box-shadow: -2rem #{random(3) + 3}rem 0 rgba($b1,.5), //
+                        0 #{random(3) + 5}rem 0 currentColor;
+                    }
+                }
+            }
+        }
+
+        //bricks
+        .hs.row#{$i}.col#{$x - 1}:checked ~ {
+            .hs.row#{$i}.col#{$x}:checked ~ {
+                div > div > house > .row#{$i}.col#{$x} {
+                    &:after {
+                        box-shadow: -2rem 3rem 0 rgba($b1,.5), //
+                        0 5rem 0 currentColor, //
+                        //
+                        10.75rem 0 0 currentColor, //
+                        10.75rem 2rem 0 currentColor, //
+                        10.75rem 4rem 0 currentColor, //
+                        10.75rem 6rem 0 currentColor, //
+                        10.75rem 8rem 0 currentColor, //
+                        10.75rem 10rem 0 currentColor;
+                    }
+                }
+            }
+        }
+    }
+
+    $row: 1, 2, 3;
+
+    @each $i in $row {
+        $col: 1, 2, 3, 4;
+
+        @each $x in $col {
+            //prop
+            .hs.row#{$i}.col#{$x}:checked ~ {
+                div > div > house > .row#{$i}.col#{$x} {
+                    border-bottom: .75rem solid $tre2;
+
+                    & > i:nth-of-type(3) {
+                        //prop
+                        width: 2rem;
+                        height: 325%;
+                        border-left: .75rem solid $tre2;
+                        border-right: .75rem solid $tre2;
+                        top: 12rem;
+                        background: repeating-linear-gradient( $none, $none 4rem, $tre2, $tre2 4.5rem);
+                        z-index: -200;
+
+                        &:before {
+                            width: 12rem;
+                            height: 12rem;
+                            border: 1.15rem dashed $none;
+                            border-bottom-color: $tre2;
+                            box-shadow: 0 .75rem 0 $tre2, inset 0 -.75rem 0 $tre2;
+                            top: .5rem;
+                            border-radius: 5rem;
+                            left: -.5rem;
+                            transform: scaleY(-1);
+                        }
+
+                        &:after {
+                            width: 2rem;
+                            height: 100%;
+                            border-left: .75rem solid $tre2;
+                            border-right: .75rem solid $tre2;
+                            left: 9.8rem;
+                            background: repeating-linear-gradient( $none, $none 4rem, $tre2, $tre2 4.5rem);
+                        }
+                    }
+
+                    &:nth-of-type(n+5) > i:nth-of-type(3) {
+                        height: 225%;
+                    }
+
+                    &:nth-of-type(n+9) > i:nth-of-type(3) {
+                        height: 13.5rem;
+                    }
+                }
+            }
+
+            .hs.row#{$i + 1}.col#{$x}:checked ~ {
+                .hs.row#{$i}.col#{$x}:checked ~ {
+                    div > div > house > .row#{$i}.col#{$x} {
+                        border-bottom: none;
+
+                        & > i:nth-of-type(3) {
+                            display: none !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+//bottom row
+@for $i from 23 through 26 {
+    [id^="cb#{$i}"]:checked ~ div > div > house > [for="ncb#{$i}"] {
+        box-shadow: 0 .5rem 0 $base;
+
+        & > i:nth-of-type(3) {
+            //door
+            width: 4rem;
+            height: 9rem;
+            right: 0;
+            margin: auto;
+            top: 3.5rem;
+            border-radius: .5rem;
+            //bushes
+            &:before {
+                width: 7rem;
+                height: 4rem;
+                left: -8em;
+                top: 6rem;
+                border-radius: 50% 50% 1rem 1rem / 80% 80% 1rem 1rem;
+                background: $r4;
+                box-shadow: 3rem 1rem 0 -1rem $r41, //
+                14rem .5rem 0 -.5rem $r42, //
+                10rem 1rem 0 -1.25rem $r4;
+            }
+            //flowers
+            &:after {
+                width: .75rem;
+                height: .75rem;
+                background: #fff;
+                border-radius: 50%;
+                left: -5rem;
+                top: 7rem;
+                box-shadow: 2rem .5rem 0 -.1rem #fff, //
+                1rem 1.5rem 0 -.05rem #fff, //
+                15rem 1.5rem 0 -.05rem #fff, //
+                16rem 1rem 0 -.1rem #fff;
+            }
+        }
+        //differences
+        &.col3 > i:nth-of-type(3) {
+            //bushes
+            &:before {
+                height: 3rem;
+                left: -8.5em;
+                top: 7rem;
+                background: $r4;
+                box-shadow: 3rem .75rem 0 -1rem $r41, //
+                14rem 1rem 0 .5rem $r4, //
+                10rem .5rem 0 -.5rem $r42;
+            }
+            //flowers
+            &:after {
+                left: -7rem;
+            }
+        }
+
+        &.col2 > i:nth-of-type(3) {
+            //bushes
+            &:before {
+                height: 3.5rem;
+                width: 6rem;
+                left: -7em;
+                top: 6.5rem;
+                background: $r4;
+                box-shadow: 3rem .75rem 0 -1rem $r41, //
+                13rem 1rem 0 .5rem $r42, //
+                9rem .5rem 0 -.5rem $r41;
+            }
+            //flowers
+            &:after {
+                left: -7rem;
+            }
+        }
+
+        &.col1 > i:nth-of-type(3) {
+            //bushes
+            &:before {
+                width: 6rem;
+                height: 3rem;
+                left: -6.5em;
+                top: 7rem;
+                border-radius: 50% 50% 1rem 1rem / 80% 80% 1rem 1rem;
+                background: $r41;
+                box-shadow: 3rem .5rem 0 -.75rem $r4, //
+                9rem .5rem 0 -.5rem $r4, //
+                12rem -.25rem 0 .5rem $r42;
+            }
+            //flowers
+            &:after {
+                width: .75rem;
+                height: .75rem;
+                background: #fff;
+                border-radius: 50%;
+                left: -5rem;
+                top: 7rem;
+                box-shadow: 2rem .5rem 0 -.1rem #fff, //
+                1rem .75rem 0 -.05rem #fff, //
+                16rem 1.5rem 0 -.05rem #fff, //
+                15rem 1rem 0 -.1rem #fff;
+            }
+        }
+    }
+
+    #cb#{$i}:checked ~ #cb#{$i + 1}:not(:checked) ~ div > div > house > [for="ncb#{$i}"],
+    #cb23:checked ~ #cb24:checked ~ #cb25:checked ~ #cb26:checked ~ div > div > house > [for="ncb24"],
+    #cb26:checked ~ div > div > house > [for="ncb26"] {
+        & > i:nth-of-type(3) {
+            //door
+            background: radial-gradient(circle at 80% center, $r2 .25rem,$none .25rem), radial-gradient(circle at 81% 52%, $shadow .25rem,$none .4rem), $r3;
+            box-shadow: inset 0 .5rem 1rem $shadow;
+        }
+
+        &.col#{random(2 + 2)} > i:nth-of-type(3) {
+            //door
+            background: radial-gradient(circle at 80% center, $r2 .25rem,$none .25rem), radial-gradient(circle at 81% 52%, $shadow .25rem,$none .4rem), $tre1;
+        }
+
+        &.col#{random(2)} > i:nth-of-type(3) {
+            //door
+            background: radial-gradient(circle at 80% center, $r2 .25rem,$none .25rem), radial-gradient(circle at 81% 52%, $shadow .25rem,$none .4rem), $smoke;
+        }
+
+        & > i:nth-of-type(4) {
+            transform: scale(.5);
+            //window
+            box-shadow: inset 0 0 0 .5rem $ls, //
+            inset 0 0 .5rem $ds, //
+            inset 0 0 0 .5rem $r3, //
+            inset 0 0 1rem 1rem $ds, //
+            inset 0 -2rem 0 #000, //
+            inset 0 -3.5rem 0 $tre2;
+
+            &:after {
+                height: .5rem;
+                top: 2.3rem;
+                background: $r3;
+                box-shadow: inset 0 0 0 .5rem $ls;
+            }
+
+            &:before {
+                width: .5rem;
+                left: 2.3rem;
+                background: $r3;
+            }
+        }
+    }
+}
+
+//castle
+
+.hs.house.row4.col2:not(:checked) ~ .hs.row4.col3:checked ~ .hs.house.row4.col4:not(:checked) ~
+.hs.house.row3.col2:not(:checked) ~ .hs.row3.col3:checked ~ .hs.house.row3.col4:not(:checked) ~
+.hs.house.row2.col2:not(:checked) ~ .hs.row2.col3:checked ~ .hs.house.row2.col4:not(:checked) ~
+.hs.house.row1.col2:not(:checked) ~ .hs.row1.col3:checked ~ .hs.house.row1.col4:not(:checked) ~ {
+    div > div > house > .row1.col3, div > div > house > .row2.col3, div > div > house > .row3.col3, div > div > house > .row4.col3 {
+        background: $stone;
+        color: $stone;
+        z-index: 310;
+
+        & > i:nth-of-type(4),
+        & > i:nth-of-type(3) {
+            border-radius: 50% 50% .3rem .3rem;
+        }
+
+        & > i:nth-of-type(3) {
+            height: 10rem;
+            width: 4.5rem;
+            top: 2.5rem;
+
+            &:before {
+                top: 8rem;
+            }
+
+            &:after {
+                top: 8rem;
+            }
+        }
+
+        & > i:nth-of-type(4) {
+            &:after {
+                box-shadow: inset 0 0 0 .5rem $ls;
+            }
+        }
+    }
+
+    div > div > house > .row1.col3 {
+        & > i:nth-of-type(1) {
+            display: none;
+        }
+
+        & > i:nth-of-type(2) {
+            border: 1rem solid $none;
+            border-left: 3rem solid $r1;
+            top: -8.5rem;
+            left: 4.25rem;
+            box-shadow: none;
+
+            &:before {
+                top: 3.25rem;
+                left: -8.25rem;
+                background: $stone;
+                width: 2.75rem;
+                height: 5rem;
+                border-radius: .25rem .25rem 50% 50%;
+                box-shadow: 4rem 0 0 $stone, //
+                8rem 0 0 $stone, //
+                12rem 0 0 $stone;
+            }
+
+            &:after {
+                width: 14.5rem;
+                height: 3rem;
+                top: 6.25rem;
+                border-radius: 0 0 2rem 2rem;
+                background: $stone;
+                left: -8.25rem;
+                filter: none;
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        & > i:nth-of-type(4) {
+            &:before {
+                box-shadow: inset 0 0 0 .5rem $ls, //
+                -2rem -12.5rem 0 $tre2;
+            }
+        }
+    }
+}
+
+//lighthouse
+
+.hs.house.row4.col1:not(:checked) ~ .hs.house.row4.col2:checked ~ .hs.house.row4.col3:not(:checked) ~
+.hs.house.row3.col1:not(:checked) ~ .hs.shed.row3.col2:checked ~ .hs.house.row3.col3:not(:checked) ~
+.hs.house.row2.col1:not(:checked) ~ .hs.house.row2.col2:checked ~ .hs.house.row2.col3:not(:checked) ~
+.hs.house.row1.col1:not(:checked) ~ .hs.shed.row1.col2:checked ~ .hs.house.row1.col3:not(:checked) ~ {
+    div > div > house > .row1.col2, div > div > house > .row2.col2, div > div > house > .row3.col2, div > div > house > .row4.col2 {
+        z-index: 310;
+        background: none;
+        border: none;
+        //back
+        &:before, &:after {
+            width: 80%;
+            height: 105%;
+            background: linear-gradient(to right, $s1, currentColor);
+            transform: skewX(-2deg);
+            border-radius: .1rem .1rem 50% 50% / 50% 50% .25rem .25rem;
+            top: 0;
+            left: -1rem;
+            box-shadow: none;
+            filter: none;
+            opacity: 1;
+        }
+
+        &:after {
+            left: auto;
+            right: -1rem;
+            transform: skewX(2deg);
+            background: linear-gradient(to right, $none, currentColor, $sd);
+        }
+
+        & > i:nth-of-type(4) {
+            border-radius: 50%;
+        }
+
+        & > i:nth-of-type(3) {
+            border-radius: 2rem 2rem .5rem .5rem;
+        }
+
+        & > i:nth-of-type(4) {
+            &:after {
+                box-shadow: inset 0 0 0 .5rem $ls;
+            }
+        }
+    }
+    //light
+    div > div > house > .row1.col2 {
+        & > i:nth-of-type(1) {
+            display: none;
+        }
+
+        & > i:nth-of-type(2) {
+            width: 8rem;
+            height: 12rem;
+            border: .5rem solid $none;
+            border-top: 1rem solid $smoke;
+            border-bottom: 6rem solid $dark;
+            border-radius: .5rem .5rem 0 0;
+            top: -12rem;
+            left: 0;
+            right: 0;
+            margin: auto;
+            background: repeating-linear-gradient(to right, $smoke .5rem, $smoke 1rem, $none 1rem, $none 3.25rem), //
+            repeating-linear-gradient(45deg, $dark, $dark .2rem, $none .5rem, $none 1rem), //
+            repeating-linear-gradient(-45deg, $dark, $dark .2rem, $none .5rem, $none 1rem);
+            box-shadow: inset 0 -1rem 0 $smoke;
+            background-size: cover;
+
+            &:before {
+                border: 3rem solid $none;
+                width: 6.5rem;
+                box-shadow: inset 0 3rem 0 $dark;
+                border-bottom-color: $tre2;
+                top: -10rem;
+                right: 0;
+                margin: auto;
+                height: 9rem;
+                border-radius: 0;
+                background: none;
+            }
+
+            &:after {
+                width: 12.5rem;
+                background: repeating-linear-gradient(to right, $smoke,$smoke .5rem, $none .5rem, $none 1.32rem);
+                height: 5rem;
+                top: 6rem;
+                border-radius: .5rem;
+                border: none;
+                border-bottom: 1rem solid $smoke;
+                border-top: .5rem solid $smoke;
+                left: -10rem;
+                right: -10rem;
+                margin: auto;
+                box-shadow: none;
+                display: block;
+            }
+        }
+    }
+
+    div > div > house > .row3.col2 {
+        //back
+        color: $stone;
+
+        &:before, &:after {
+            left: -.5rem;
+        }
+
+        &:after {
+            left: auto;
+            right: -.5rem;
+        }
+    }
+
+    div > div > house > .row2.col2 {
+        //back
+        &:before, &:after {
+            left: 0;
+        }
+
+        &:after {
+            left: auto;
+            right: 0;
+        }
+    }
+
+    div > div > house > .row1.col2 {
+        color: $stone;
+        //back
+        &:before, &:after {
+            left: .5rem;
+        }
+
+        &:after {
+            left: auto;
+            right: .5rem;
+        }
+    }
+
+    text {
+        transform: scale(1) !important;
+        z-index: 410;
+        transition: all .5s 1s ease-in-out;
+        opacity: 1;
+
+        welldone {
+            display: block;
+        }
+
+        gameover {
+            display: none;
+        }
+    }
+}
+
+.hs.row2.col2:checked ~ {
+    div > div > house > .row2.col2 {
+        & > i:nth-of-type(4) {
+            border-radius: 50% !important;
+        }
+
+        & > i:nth-of-type(4) {
+            &:after {
+                box-shadow: inset 0 0 0 .5rem $ls;
+            }
+        }
+    }
+}
+
+.hs.house.row4.col2:checked ~ .hs.shed.row3.col2:checked ~ {
+    div > div > house > .row3.col2 {
+        & > i:nth-of-type(4) {
+            border-radius: 50%;
+        }
+
+        & > i:nth-of-type(4) {
+            &:after {
+                box-shadow: inset 0 0 0 .5rem $ls;
+            }
+        }
+    }
+}

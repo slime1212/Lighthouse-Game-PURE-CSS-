@@ -1,0 +1,147 @@
+$row: 1, 2, 3, 4;
+
+@each $i in $row {
+    $col: 1, 2, 3, 4;
+
+    @each $x in $col {
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            div > div > house > .row#{$i}.col#{$x} {
+                //window
+                &.col#{random(4)} > i:nth-of-type(4) {
+                    //window
+                    background: $sun;
+                    box-shadow: inset 0 0 0 .5rem $ls, //
+                    inset 0 0 .5rem $ds, //
+                    inset 0 0 0 .5rem $tre2, //
+                    inset 0 0 1rem 1rem $ds, //
+                    inset 1rem 0 0 $r1, //
+                    inset -1.25rem 0 0 $r1, //
+                    inset 0 -2rem 0 yellow, //
+                    inset 0 -3.5rem 0 #ffa200, //
+                    0 0 2rem yellow;
+
+                    &:after, &:before {
+                        background: $tre2;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.lh {
+    pointer-events: none;
+    perspective: 30rem;
+    perspective-origin: 50% -5rem;
+    transform: translate3d(0,0,-100rem) scale(0);
+    opacity: 0;
+}
+
+.hs.house.row4.col1:not(:checked) ~ .hs.house.row4.col2:checked ~ .hs.house.row4.col3:not(:checked) ~
+.hs.house.row3.col1:not(:checked) ~ .hs.shed.row3.col2:checked ~ .hs.house.row3.col3:not(:checked) ~
+.hs.house.row2.col1:not(:checked) ~ .hs.house.row2.col2:checked ~ .hs.house.row2.col3:not(:checked) ~
+.hs.house.row1.col1:not(:checked) ~ .hs.shed.row1.col2:checked ~ .hs.house.row1.col3:not(:checked) ~ {
+    div.lh {
+        transform: translate3d(0,0,-100rem) scale(1);
+        /* animation: lightson $timer linear infinite;*/
+        light {
+            top: -12rem;
+            left: -6.25rem;
+            transform: scaleX(3) rotateY(0);
+            /*   animation: light 8s linear infinite;*/
+            filter: blur(.1rem);
+            opacity: .5;
+
+            &, &:before, &:after {
+                background: linear-gradient(to right, $none,rgba(#fff466,.5),$none);
+                width: 100%;
+                height: 5rem;
+            }
+
+            &:before {
+                transform: rotate(15deg) rotateY(-5deg);
+            }
+
+            &:after {
+                transform: rotate(-15deg) rotateY(5deg);
+            }
+        }
+
+        lens {
+            top: -12rem;
+            left: -6.25rem;
+            width: 100%;
+            height: 5rem;
+
+            &:before, &:after {
+                height: 5rem;
+                border-radius: 50%;
+                right: 0;
+                margin: auto;
+            }
+
+            &:before {
+                background: linear-gradient(to right, $none,rgba($light,.5),$none);
+                width: 100%;
+                transform: scaleX(3) rotateY(0);
+                opacity: .25;
+                filter: blur(.1rem);
+            }
+
+            &:after {
+                width: 5rem;
+                background: radial-gradient( $light,$none);
+                opacity: .75;
+                box-shadow: 60rem 0 15rem $light, -60rem 0 15rem $light, 0 0 3rem $light, inset 0 0 0 $light;
+            }
+        }
+    }
+}
+
+div.lh {
+    animation: lightson $timer linear infinite;
+
+    light {
+        animation: light 8s linear infinite;
+    }
+
+    lens {
+        &:before {
+            animation: light 8s linear infinite;
+        }
+
+        &:after {
+            animation: light2 8s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes light {
+    100% {
+        transform: scaleX(3) rotateY(-360deg);
+    }
+}
+
+@keyframes lightson {
+    20%,80% {
+        opacity: 0;
+    }
+
+    25%, 75% {
+        opacity: 1;
+    }
+}
+
+@keyframes light2 {
+    22%,27%,72%,77% {
+        box-shadow: 0rem 0 15rem $light, 0rem 0 15rem $light, 0 0 3rem $light, inset 0 0 0 0 $light;
+    }
+
+    24%, 74% {
+        box-shadow: 0rem 0 15rem $light, 0rem 0 15rem $light, 0 0 5rem 40rem rgba($light,.25), inset 0 0 0 2.5rem $light;
+    }
+
+    50% {
+        box-shadow: -60rem 0 15rem $light, 60rem 0 15rem $light, 0 0 3rem $light, inset 0 0 0 0 $light;
+    }
+}

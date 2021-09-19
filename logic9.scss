@@ -1,0 +1,2176 @@
+//
+//
+//
+//
+
+house label, shed label {
+    opacity: 0;
+
+    & *, &:after, &:before {
+        transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes pop {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,-12rem,0);
+    }
+
+    99% {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+}
+
+@keyframes popup {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,12rem,0);
+    }
+
+    99% {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+}
+
+$row: 1, 2, 3, 4;
+
+@each $i in $row {
+    $col: 1, 2, 3, 4;
+    //shed or house
+    @each $x in $col {
+        .shed.row#{$i}.col#{$x}:checked ~ div > div > shed > .row#{$i}.col#{$x},
+        .house.row#{$i}.col#{$x}:checked ~ div > div > house > .row#{$i}.col#{$x} {
+            opacity: 1;
+
+            &:after, & *:after {
+                animation: pop .1s linear forwards;
+            }
+
+            &:before, & *:before {
+                animation: popup .1s linear forwards;
+            }
+        }
+
+        .shed.row#{$i}.col#{$x}:checked ~ div > div > house > .row#{$i}.col#{$x} {
+            & > i:nth-of-type(5) {
+                display: none !important;
+            }
+        }
+
+        //right
+        .house.row#{$i}.col#{$x}:checked ~ div > div > hbtn > .row#{$i}.col#{$x - 1} {
+            z-index: 100;
+        }
+        //left
+        .house.row#{$i}.col#{$x}:checked ~ div > div > hbtn > .row#{$i}.col#{$x + 1} {
+            z-index: 100;
+        }
+        //down
+        .house.row#{$i}.col#{$x}:checked ~ div > div > hbtn > .row#{$i + 1}.col#{$x} {
+            z-index: 100;
+        }
+        //up
+        .house.row#{$i}.col#{$x}:checked ~ div > div > hbtn > .row#{$i - 1}.col#{$x} {
+            z-index: 100;
+        }
+    }
+}
+
+$row: 1, 2, 3, 4;
+
+@each $i in $row {
+    $col: 1, 2, 3, 4;
+
+    @each $x in $col {
+        .hs.row#{$i}.col#{$x}:checked ~ div > div > shed > .row#{$i}.col#{$x} {
+            z-index: 300;
+        }
+
+        .hs.row#{$i}.col#{$x}:checked ~ div > div > house > .row#{$i}.col#{$x} {
+            background: $base;
+            z-index: 300;
+            color: $base;
+        }
+
+        .hs.shed.row#{$i}.col#{$x}:checked ~ div > div > house > .row#{$i}.col#{$x} {
+            background: $r1;
+            color: $r1;
+        }
+    }
+}
+
+$col: 1, 2, 3, 4;
+
+@each $c in $col {
+    $row: 1, 2, 3, 4;
+
+    @each $r in $row {
+        $hs: ( 0: 'shed', 1: 'house');
+
+        @each $y, $z in $hs {
+            //down fix
+            .house.row#{$r - 1}.col#{$c}:checked ~ {
+                div > div > #{$z} > .row#{$r}.col#{$c} {
+                    opacity: $y;
+                }
+            }
+
+            .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                .house.row#{$r - 2}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            //sh
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                div > div > #{$z} > .row#{$r + 1}.col#{$c - 1},
+                div > div > #{$z} > .row#{$r}.col#{$c - 1},
+                div > div > #{$z} > .row#{$r - 1}.col#{$c - 1} {
+                    opacity: $y;
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ {
+                    //..s
+                    //.ssh
+                    //..s
+                    div > div > #{$z} > .row#{$r}.col#{$c - 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 1},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 1} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r}.col#{$c - 1}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ {
+                        //.s
+                        //sssh
+                        //.s
+                        div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ {
+                .hs.row#{$r}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ {
+                        .house.row#{$r}.col#{$c}:checked ~ {
+                            //s
+                            //sssh
+                            //s
+                            div > div > #{$z} > .row#{$r + 1}.col#{$c - 3},
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ {
+                    //s
+                    //s
+                    //ssh
+                    div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 3}:checked ~ {
+                        //ss
+                        //s
+                        //sssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                        //sss
+                        //s
+                        //sssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        //ssss
+                        //s
+                        //sssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                        //sss
+                        //.s
+                        //.ssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 1},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        //.sss
+                        //.s
+                        //.ssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        //..ss
+                        //..s
+                        //..sh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        //sss
+                        //s.s
+                        //..sh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        //sss
+                        //s.s
+                        //s.sh
+                        div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    //..sh
+                    //..s
+                    //..s
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c - 1} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    //.ssh
+                    //.s.
+                    //.s.
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c - 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 3}:checked ~ {
+                .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    //sssh
+                    //s
+                    //s
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //sssh
+                        //s
+                        //ss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ .hs.row#{$r + 2}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //sssh
+                        //s
+                        //sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //sssh
+                        //s
+                        //ssss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //.ssh
+                        //.s
+                        //sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //.ssh
+                        //.s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //..sh
+                        //..s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 1},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //..sh
+                        //..s
+                        //sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //..sh
+                        //s.s
+                        //sss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 3}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //s.sh
+                        //s.s
+                        //sss
+                        div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 2}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                        //..sh
+                        //.ss
+                        //ss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c - 3}:checked ~ .hs.row#{$r + 2}.col#{$c - 2}:checked ~ .hs.row#{$r + 2}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c - 3}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ .house.row#{$r + 1}.col#{$c}:checked ~ {
+                    //s
+                    //s.sh
+                    //sss
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 3}:checked ~ .hs.row#{$r + 1}.col#{$c - 2}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ {
+                        //ss
+                        //s.sh
+                        //sss
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    //.ss
+                    //..sh
+                    div > div > #{$z} > .row#{$r - 2}.col#{$c - 1},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                        //ss
+                        //.ss
+                        //..sh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        .hs.row#{$r - 3}.col#{$c - 2}:checked ~ {
+                            //ss
+                            //.ss
+                            //..ss
+                            //...h
+                            div > div > #{$z} > .row#{$r - 3}.col#{$c - 2},
+                            div > div > #{$z} > .row#{$r - 3}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 3}.col#{$c + 2}:checked ~ {
+                            //..ss
+                            //sss
+                            //s
+                            //h
+                            div > div > #{$z} > .row#{$r - 3}.col#{$c + 3},
+                            div > div > #{$z} > .row#{$r - 3}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    //s
+                    //sss
+                    //s.sh
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r - 2}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 3}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        //s
+                        //sss
+                        //s.ss
+                        //...h
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r - 3}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    //sss
+                    //s.sh
+                    //S
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 3}:checked ~ {
+                .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                        //sss
+                        //s.sh
+                        //ss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                        //sss
+                        //s.s
+                        //s.h
+                        div > div > #{$z} > .row#{$r}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    //sss
+                    //s.h
+                    //s
+                    div > div > #{$z} > .row#{$r}.col#{$c - 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 3}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    //ssss
+                    //s..h
+                    //s
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 3}:checked ~ .hs.row#{$r + 1}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r}.col#{$c - 3}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        //ssss
+                        //s..h
+                        //sss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 2}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                        //ssss
+                        //s..s
+                        //ssh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 1},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                        //ssss
+                        //s
+                        //sh
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 1},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                        //ssss
+                        //s..s
+                        //sh.s
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    //sss
+                    //h.ss
+                    //..s
+                    div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r}.col#{$c + 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                    //ssss
+                    //h.ss
+                    //...s
+                    div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r}.col#{$c + 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 2}:checked ~ .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                        //ssss
+                        //h..s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 2}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                        //sss
+                        //h.s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 3},
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 1}:checked ~ .hs.row#{$r + 1}.col#{$c + 2}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    //hs
+                    //.sss
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    //.sss
+                    //hs
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 1}:checked ~ .hs.row#{$r + 1}.col#{$c + 2}:checked ~ .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                    //...s
+                    //hs.s
+                    //.sss
+                    div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                    //.sss
+                    //hs.s
+                    //...s
+                    div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 1}:checked ~ .hs.row#{$r + 1}.col#{$c + 2}:checked ~ .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                        //..ss
+                        //hs.s
+                        //.sss
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                        //.sss
+                        //hs.s
+                        //..ss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                        //ssss
+                        //s..s
+                        //h.ss
+                        div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                        //sss
+                        //s.s
+                        //h.ss
+                        div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                    .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                        //.sss
+                        //ss.s
+                        //h.ss
+                        div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 2}:checked ~ {
+                .hs.row#{$r}.col#{$c - 2}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        //sss
+                        //s.h
+                        //ss
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 2}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    //..sh
+                    //sss
+                    //.s.
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 2},
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c - 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c - 3}:checked ~ .hs.row#{$r + 1}.col#{$c - 2}:checked ~ .hs.row#{$r + 1}.col#{$c - 1}:checked ~ {
+                .hs.row#{$r}.col#{$c - 1}:checked ~ .house.row#{$r}.col#{$c}:checked ~ {
+                    //s.sh
+                    //sss
+                    //s..
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .house.row#{$r - 1}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c + 1} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .house.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 1},
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .house.row#{$r - 1}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                            .house.row#{$r - 1}.col#{$c}:checked ~ {
+                                div > div > #{$z} > .row#{$r + 1}.col#{$c + 3},
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .house.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                                div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                                .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h..s
+            //s..s
+            //ssss
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h.s.
+            //s.s.
+            //sss.
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h.ss
+            //s..s
+            //ssss
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                        .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                            div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                                opacity: $y;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h.ss
+            //s.s.
+            //sss.
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                    .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h...
+            //s.ss
+            //sss.
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h..s
+            //s.ss
+            //sss.
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    .house.row#{$r - 2}.col#{$c}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            //h...
+            //ss..
+            //.ss.
+            .hs.row#{$r}.col#{$c}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+            //h...
+            //ss..
+            //.sss
+            .hs.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+            //h...
+            //ss.s
+            //.sss
+            .hs.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+            //h..s
+            //ss.s
+            //.sss
+            .hs.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+            //h.ss
+            //ss.s
+            //.sss
+            .hs.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+            //h.ss
+            //sss
+            //..ss
+            //not done yet
+            .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                    .house.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                            opacity: $y;
+                        }
+                        //experiment
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .house.row#{$r}.col#{$c}:checked ~ {
+                //hs
+                div > div > #{$z} > .row#{$r}.col#{$c + 1} {
+                    opacity: $y;
+                }
+                //.s
+                //hss
+                //.s
+                .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c + 2},
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 1},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 1} {
+                        opacity: $y;
+                    }
+                    //..s
+                    //hsss
+                    //..s
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                        //...s
+                        //hsss
+                        //...s
+                        .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                            div > div > #{$z} > .row#{$r + 1}.col#{$c + 3},
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 1}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                        //hs
+                        //.ss
+                        //.s
+                        div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 1}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                            //hs
+                            //.s
+                            //sss
+                            div > div > #{$z} > .row#{$r + 2}.col#{$c},
+                            div > div > #{$z} > .row#{$r + 2}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ .hs.row#{$r + 2}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 1}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                            //hs
+                            //.s
+                            //.sss
+                            div > div > #{$z} > .row#{$r + 2}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ .hs.row#{$r + 2}.col#{$c + 2}:checked ~ .hs.row#{$r + 2}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 1}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                            //hs
+                            //.s.s
+                            //.sss
+                            div > div > #{$z} > .row#{$r + 1}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ .hs.row#{$r + 2}.col#{$c + 2}:checked ~ .hs.row#{$r + 2}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 1}:checked ~ .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ {
+                        .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                            //hs.s
+                            //.s.s
+                            //.sss
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 2}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                    //hss
+                    //..ss
+                    //..s
+                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 3},
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c + 2} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 2}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        //hss
+                        //..s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 1},
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ .hs.row#{$r + 2}.col#{$c + 2}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 2}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                        //hss
+                        //..s
+                        //sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                    //hsss
+                    //...s
+                    //...s
+                    div > div > #{$z} > .row#{$r + 2}.col#{$c + 3} {
+                        opacity: $y;
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                        //hsss
+                        //...s
+                        //..ss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 2}:checked ~ .hs.row#{$r + 2}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                        //hsss
+                        //...s
+                        //.sss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            .hs.row#{$r + 2}.col#{$c + 1}:checked ~ .hs.row#{$r + 2}.col#{$c + 2}:checked ~ .hs.row#{$r + 2}.col#{$c + 3}:checked ~ {
+                .hs.row#{$r + 1}.col#{$c + 3}:checked ~ {
+                    .house.row#{$r}.col#{$c}:checked ~ .hs.row#{$r}.col#{$c + 1}:checked ~ .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                        //hsss
+                        //...s
+                        //ssss
+                        div > div > #{$z} > .row#{$r + 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                    }
+                }
+            }
+
+            ////////////////////////////////
+            //UP
+            //x...
+            //x...
+            //x...
+            //x...
+            .house.row#{$r + 1}.col#{$c}:checked ~ {
+                div > div > #{$z} > .row#{$r}.col#{$c} {
+                    opacity: $y;
+                }
+                //RIGHT
+                //xxx.
+                //x.xx
+                //xx.x
+                //...x
+                .hs.row#{$r}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+                //RIGHT
+                //xxx.
+                //x.xx
+                //xx.x
+                //...x
+                .hs.row#{$r}.col#{$c - 3}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+                //RIGHT
+                //....
+                //.xxx
+                //xx.x
+                //...x
+                .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                }
+                //RIGHT
+                //.xxx
+                //.x.x
+                //xx.x
+                //...x
+                .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+
+                .hs.row#{$r}.col#{$c}:checked ~ {
+                    //RIGHT
+                    //....
+                    //xxxx
+                    //x..x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                    //RIGHT
+                    //....
+                    //.xxx
+                    //.x.x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+                    //RIGHT
+                    //.xxx
+                    //.x.x
+                    //...x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //.xxx
+                    //.x.x
+                    //.x.x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+
+                            div > div > #{$z} > .row#{$r}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //.xxx
+                    //.x.x
+                    //xx.x
+                    //...x
+                    .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                        .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                            .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                                div > div > #{$z} > .row#{$r}.col#{$c - 4} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //.xxx
+                    //xx.x
+                    //x..x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //xxxx
+                    //x..x
+                    //...x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //xxxx
+                    //x..x
+                    //x..x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+                //LEFT
+                //....
+                //....
+                //xxxx
+                //x...
+                .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c + 1} {
+                        opacity: $y;
+                    }
+                    //new bit
+                    .hs.row#{$r}.col#{$c + 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 2},
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 1}.col#{$c + 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c + 1},
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r + 1}.col#{$c + 1} {
+                                opacity: $y;
+                            }
+                            //silly down
+                            .hs.row#{$r - 1}.col#{$c + 3}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                            //backwards
+                            .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                                    opacity: $y;
+                                }
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c - 1},
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                    opacity: $y;
+                                }
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c - 2} {
+                                    opacity: $y;
+                                }
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2},
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c},
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                            //>
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2},
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 2}:checked ~,
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+                        }
+
+                        .hs.row#{$r}.col#{$c + 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3},
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2},
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                                        opacity: $y;
+                                    }
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 1} {
+                                        opacity: $y;
+                                    }
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                                        opacity: $y;
+                                    }
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3},
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+
+                            .hs.row#{$r}.col#{$c + 3}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                                            opacity: $y;
+                                        }
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                                            opacity: $y;
+                                        }
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //RIGHT
+                //....
+                //....
+                //xxxx
+                //...x
+                .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c - 1} {
+                        opacity: $y;
+                    }
+                }
+
+                .hs.row#{$r}.col#{$c - 1}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c +2}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+
+                .hs.row#{$r}.col#{$c - 1}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c - 2},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 1} {
+                        opacity: $y;
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 1}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2},
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 1},
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                        opacity: $y;
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                //^
+                .hs.row#{$r}.col#{$c - 3}:checked ~ .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                        opacity: $y;
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                                        opacity: $y;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .hs.row#{$r}.col#{$c - 2}:checked ~ .hs.row#{$r}.col#{$c - 1}:checked ~ .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r}.col#{$c - 3},
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c - 2} {
+                        opacity: $y;
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 3},
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                    }
+                }
+                //^
+                ///////
+                ///////
+                ///////
+                .hs.row#{$r}.col#{$c}:checked ~ {
+                    div > div > #{$z} > .row#{$r - 1}.col#{$c} {
+                        opacity: $y;
+                    }
+                    //weirddown
+                    //....
+                    //xxx.
+                    //x.xx
+                    //x...
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                        opacity: $y;
+                    }
+                    //wierd down
+                    //xxxx
+                    //x..x
+                    //x.xx
+                    //x...
+                    .hs.row#{$r}.col#{$c + 3}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                    //wierd down
+                    //xxx.
+                    //x.x.
+                    //x.xx
+                    //x...
+                    .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+
+                    .hs.row#{$r}.col#{$c + 3}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 1}.col#{$c + 1}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                        div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                            opacity: $y;
+                        }
+                    }
+                    //LEFT
+                    //....
+                    //xxxx
+                    //x...
+                    //x...
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 1} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 1}.col#{$c + 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 1}.col#{$c + 3}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+
+                                    .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+
+                            .hs.row#{$r - 1}.col#{$c + 2}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 1}.col#{$c + 3},
+                                div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 2},
+                                    div > div > #{$z} > .row#{$r + 1}.col#{$c + 2},
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                }
+                                //DOWN
+                                //....
+                                //xxx.
+                                //x.x.
+                                //x...
+                                div > div > #{$z} > .row#{$r}.col#{$c + 2} {
+                                    opacity: $y;
+                                }
+                                //DOWN
+                                //....
+                                //xxxx
+                                //x..x
+                                //x...
+                                .hs.row#{$r - 1}.col#{$c + 3}:checked ~ div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                    }
+                    //RIGHT
+                    //....
+                    //xxxx
+                    //...x
+                    //...x
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 2},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                            opacity: $y;
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        .hs.row#{$r - 2}.col#{$c - 3}:checked ~ .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                    ///////
+                    .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 1}.col#{$c - 3},
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                            opacity: $y;
+                        }
+                    }
+
+                    .hs.row#{$r - 1}.col#{$c - 3}:checked ~ .hs.row#{$r - 1}.col#{$c - 2}:checked ~ .hs.row#{$r - 1}.col#{$c - 1}:checked ~ .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                            opacity: $y;
+                        }
+                    }
+                    /////////
+                    .hs.row#{$r - 1}.col#{$c}:checked ~ {
+                        div > div > #{$z} > .row#{$r - 2}.col#{$c} {
+                            opacity: $y;
+                        }
+                        //wierd down
+                        //xxx.
+                        //x.x.
+                        //x.x.
+                        //x...
+                        .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 2},
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                                div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+
+                        .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 3}:checked ~ {
+                            .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                    opacity: $y;
+                                }
+                            }
+                        }
+                        //wierd down
+                        //xxx.
+                        //x.x.
+                        //x.xx
+                        //x...
+                        .hs.row#{$r}.col#{$c + 2}:checked ~ .hs.row#{$r - 1}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                        //wierd down
+                        //xxxx
+                        //x..x
+                        //x..x
+                        //x...
+                        .hs.row#{$r - 1}.col#{$c + 3}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c + 1}:checked ~ .hs.row#{$r - 2}.col#{$c + 2}:checked ~ .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c + 3} {
+                                opacity: $y;
+                            }
+                        }
+                        //LEFT
+                        //xxxx
+                        //x...
+                        //x...
+                        //x...
+                        .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c + 1} {
+                                opacity: $y;
+                            }
+
+                            .hs.row#{$r - 2}.col#{$c + 1}:checked ~ {
+                                div > div > #{$z} > .row#{$r - 2}.col#{$c + 2} {
+                                    opacity: $y;
+                                }
+
+                                .hs.row#{$r - 2}.col#{$c + 2}:checked ~ {
+                                    div > div > #{$z} > .row#{$r - 2}.col#{$c + 3} {
+                                        opacity: $y;
+                                    }
+                                    //DOWN
+                                    //xxx.
+                                    //x.x.
+                                    //x...
+                                    //x...
+                                    div > div > #{$z} > .row#{$r - 1}.col#{$c + 2} {
+                                        opacity: $y;
+                                    }
+                                    //DOWN
+                                    //xxxx
+                                    //x..x
+                                    //x...
+                                    //x...
+                                    .hs.row#{$r - 2}.col#{$c + 3}:checked ~ {
+                                        div > div > #{$z} > .row#{$r - 1}.col#{$c + 3} {
+                                            opacity: $y;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        //RIGHT
+                        //xxxx
+                        //...x
+                        //...x
+                        //...x
+                        .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 1} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 2} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 2}.col#{$c - 2}:checked ~ .hs.row#{$r - 2}.col#{$c - 1}:checked ~ .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 2}.col#{$c - 3} {
+                                opacity: $y;
+                            }
+                        }
+                        //DOWN
+                        //xxxx
+                        //x..x
+                        //x..x
+                        //x...
+                        .hs.row#{$r - 2}.col#{$c}:checked ~ {
+                            div > div > #{$z} > .row#{$r - 1}.col#{$c} {
+                                opacity: $y;
+                            }
+                        }
+
+                        .hs.row#{$r - 1}.col#{$c}:checked ~ .hs.row#{$r - 2}.col4:checked ~ {
+                            div > div > #{$z} > .row#{$r}.col#{$c} {
+                                opacity: $y;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

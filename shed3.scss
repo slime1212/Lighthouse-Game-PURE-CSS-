@@ -1,0 +1,492 @@
+//treehouse
+
+shed > label {
+    & > i:nth-of-type(5) {
+        width: 100%;
+        height: 100%;
+        //ladder
+        &:after {
+            width: 2rem;
+            border-left: .5rem solid $smoke;
+            border-right: .5rem solid $smoke;
+            background: repeating-linear-gradient($none, $none 1.5rem, $smoke 1.5rem, $smoke 2rem );
+            height: 325%;
+            left: -1.5rem;
+            transform: rotate(-1deg);
+            top: 10.5rem;
+            display: none;
+        }
+        //bridge
+        &:before {
+            width: 13rem;
+            height: 3rem;
+            top: 10.5rem;
+            left: 12.5rem;
+            border: .5rem dashed $none;
+            border-bottom-color: $tre1;
+            box-shadow: 0 .25rem 0 $tre1;
+            transform: rotate(-3deg);
+            border-radius: 50%;
+            display: none;
+        }
+    }
+
+    &:nth-of-type(n+5) > i:nth-of-type(5):after {
+        height: 225%;
+    }
+
+    &:nth-of-type(n+9) > i:nth-of-type(5):after {
+        height: 15rem;
+    }
+
+    &:nth-of-type(even) > i:nth-of-type(5):after {
+        left: 10rem;
+        transform: rotate(2deg);
+    }
+}
+
+$row: 1, 2, 3;
+
+@each $i in $row {
+    $col: 1, 2, 3, 4;
+
+    @each $x in $col {
+        .hs.row#{$i}.col#{$x}:checked ~ div > div > shed > .row#{$i}.col#{$x} {
+            //back
+            &:before {
+                background: repeating-linear-gradient( $r1 1rem, $tre1 2.3rem);
+                width: 90%;
+                height: 98%;
+                left: 1.25rem;
+                border-radius: .5rem;
+                box-shadow: 0 .5rem 0 0 $tre2;
+            }
+            //roof
+            &:after {
+                width: 105%;
+                height: 5rem;
+                background: repeating-linear-gradient(to right, $tre1 1rem, $tre2 2.1rem);
+                top: -2rem;
+                border-bottom: solid .5rem $smoke;
+                box-shadow: 0 1.5rem .5rem -1rem $ds;
+                border-radius: .5rem;
+                left: auto;
+                right: -1rem;
+            }
+            //window
+            & > i:nth-of-type(4) {
+                width: 4rem;
+                height: 4rem;
+                right: 0;
+                margin: auto;
+                background: $ls;
+                top: 3rem;
+                border-radius: .5rem;
+                box-shadow: inset 0 .5rem 1rem $shadow;
+                transform: scale(.5);
+
+                &:before {
+                    width: 3.4rem;
+                    height: .5rem;
+                    background: $smoke;
+                    left: .3rem;
+                    top: .4rem;
+                    border-radius: .25rem;
+                    box-shadow: 0 1.5rem 0 $smoke, //
+                    0 3rem 0 $smoke, //
+                    0 .5rem 0 #000, //
+                    0 1rem 0 $ds, //
+                    0 2rem 0 $ds, //
+                    0 2.5rem 0 $shadow, //
+                }
+
+                &:after {
+                    width: .5rem;
+                    height: 3.4rem;
+                    background: $smoke;
+                    left: .3rem;
+                    top: .4rem;
+                    border-radius: .25rem;
+                    box-shadow: 1.5rem 0 0 $smoke, //
+                    3rem 0 0 $smoke, //
+                }
+            }
+            //door / chimney / fence
+            & > i:nth-of-type(3) {
+                //door
+                width: 4rem;
+                height: 9rem;
+                right: 0;
+                margin: auto;
+                background: $r1;
+                top: 3rem;
+                border-radius: .5rem;
+                box-shadow: inset 0 .5rem 1rem $shadow;
+                //chimney
+                &:after {
+                    left: -4rem;
+                    border: 1rem solid $none;
+                    top: -11rem;
+                    border-bottom-color: $smoke;
+                    transform: rotate(-3deg);
+                    height: 4rem;
+                    box-shadow: 0 3.7rem 0 -.5rem $smoke;
+                    border-radius: 0 0 1rem 1rem;
+                }
+                //fence
+                &:before {
+                    width: 14.5rem;
+                    height: 4.5rem;
+                    border-top: .5rem solid $tre2;
+                    border-bottom: .5rem solid $tre2;
+                    top: 5rem;
+                    left: -5rem;
+                    background: repeating-linear-gradient(to right, $tre1, $tre2 .5rem, $none .5rem, $none 1.4rem);
+                    border-radius: .5rem;
+                }
+            }
+            //props
+            & > i:nth-of-type(2) {
+                &:before {
+                    width: 1rem;
+                    height: 9rem;
+                    background: $tre2;
+                    top: -7rem;
+                }
+            }
+
+            &:nth-of-type(odd) > i:nth-of-type(2) {
+                width: 1rem;
+                background: $tre2;
+                height: 3rem;
+                border-radius: .25rem;
+                top: 18.5rem;
+                left: 10rem;
+                transform: rotate(5deg);
+
+                &:before {
+                    transform: rotate(-45deg);
+                    left: -3rem;
+                    border-radius: 0 1rem 0 0;
+                }
+
+                &:after {
+                    width: 1rem;
+                    height: 4rem;
+                    transform: rotate(45deg);
+                    background: $tre2;
+                    top: -6.5rem;
+                    left: -2rem;
+                    border-radius: 1rem 0 0 0;
+                }
+            }
+
+            &:nth-of-type(even) > i:nth-of-type(3) {
+                //chimney
+                &:after {
+                    left: 7rem;
+                    transform: rotate(3deg);
+                }
+            }
+            //smoke
+            &:nth-of-type(even) > i:nth-of-type(1) {
+                left: 11rem;
+            }
+
+            &:nth-of-type(even) > i:nth-of-type(2) {
+                &:before {
+                    transform: rotate(45deg);
+                    left: 5rem;
+                    border-radius: 1rem 0 0 0;
+                    top: 11rem;
+                }
+            }
+            //smoke
+            & > i:nth-of-type(1) {
+                &:before, &:after {
+                    top: -7.5rem;
+                    left: -1rem;
+                    animation: smoke 8s linear infinite;
+                }
+
+                &:before {
+                    animation: smoke 7.25s 3.75s linear infinite;
+                }
+            }
+            //ladder
+            & > i:nth-of-type(5):after {
+                display: block;
+            }
+        }
+        //no roof
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            div > div > shed > .row#{$i + 1}.col#{$x} {
+                &:after, & > i:nth-of-type(3):after, & > i:nth-of-type(1) {
+                    display: none;
+                }
+            }
+        }
+        //no fence / door / window
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            div > div > shed > .row#{$i - 1}.col#{$x} {
+                & > i:nth-of-type(3):before, & > i:nth-of-type(2), & > i:nth-of-type(5):after {
+                    display: none;
+                }
+
+                & > i:nth-of-type(3) {
+                    height: 0
+                }
+
+                & > i:nth-of-type(4) {
+                    transform: scale(1);
+                    right: #{random(2)}rem;
+                    left: #{random(2)}rem;
+                }
+            }
+        }
+        //chimney
+        .hs.shed.row#{$i}.col#{$x - 3}:not(:checked) ~ .hs.row#{$i}.col#{$x}:checked ~ .shed.hs.row#{$i}.col#{$x + 1}:not(:checked) ~ {
+            .hs.row#{$i - 2}.col#{$x}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(3) {
+                        //chimney
+                        &:after {
+                            left: 7rem;
+                            transform: rotate(3deg);
+                        }
+                    }
+                    //smoke
+                    & > i:nth-of-type(1) {
+                        left: 11rem;
+                    }
+                }
+            }
+        }
+        //tall back
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i - 1}.col#{$x}:checked ~ {
+            div > div > shed > .row#{$i}.col#{$x} {
+                &:before {
+                    border-top-left-radius: 0;
+                    border-top-right-radius: 0;
+                }
+            }
+
+            div > div > shed > .row#{$i - 1}.col#{$x} {
+                &:before {
+                    height: 12.5rem;
+                    box-shadow: none;
+                    border-bottom-left-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+            }
+        }
+        //random door
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.row#{$i}.col#{$x + 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(3) {
+                        height: 0
+                    }
+
+                    & > i:nth-of-type(4) {
+                        transform: scale(1);
+                        right: #{random(2)}rem;
+                        left: #{random(2)}rem;
+                    }
+
+                    & > i:nth-of-type(5):after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        //ladder control
+        .hs.row#{$i + 2}.col#{$x}:checked ~ {
+            .hs.row#{$i}.col#{$x}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(5):after {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        .hs.row2.col3:checked ~ .hs.row1.col2:checked ~ {
+            div > div > shed > .row1.col2 {
+                & > i:nth-of-type(5):after {
+                    display: none;
+                }
+            }
+        }
+
+        .hs.row#{$i + 1}.col#{$x - 1}:checked ~ {
+            .hs.row#{$i}.col#{$x}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(5):after {
+                        display: none !important;
+                    }
+                }
+            }
+        }
+
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.row#{$i - 1}.col#{$x + 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(1), & > i:nth-of-type(3):after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        //extended roof
+        .hs.row#{$i}.col#{$x}:checked ~, .hs.row#{$i}.col#{$x + 1}:checked ~ {
+            .hs.row#{$i - 1}.col#{$x + 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    &:after {
+                        width: 110%;
+                        right: -1.25rem;
+                    }
+                }
+            }
+        }
+    }
+    //long back
+    $house: 1,2,3;
+
+    @each $x in $house {
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.row#{$i}.col#{$x + 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    &:before {
+                        width: 110%;
+                    }
+                }
+
+                div > div > shed > .row#{$i}.col#{$x + 1} {
+                    //roof
+                    &:after {
+                        width: 120%;
+                        left: -1.25rem;
+                    }
+                }
+            }
+        }
+    }
+    /////////////////////////////
+    //chimney
+
+    $house: 2,4;
+
+    @each $x in $house {
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.shed.row#{$i}.col#{$x + 1}:not(:checked) ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(3) {
+                        //chimney
+                        &:after {
+                            left: 7rem;
+                            transform: rotate(3deg);
+                        }
+                    }
+                    //smoke
+                    & > i:nth-of-type(1) {
+                        left: 11rem;
+                    }
+                }
+            }
+        }
+    }
+
+    $house: 2,3;
+
+    @each $x in $house {
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.row#{$i}.col#{$x + 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    //chimney // smoke
+                    & > i:nth-of-type(3):after, & > i:nth-of-type(1) {
+                        display: none;
+                    }
+
+                    & > i:nth-of-type(3):before {
+                        width: 10.25rem;
+                    }
+                }
+            }
+        }
+
+        .hs.row#{$i}.col#{$x}:checked ~ {
+            .hs.row#{$i}.col#{$x - 1}:checked ~ {
+                div > div > shed > .row#{$i}.col#{$x} {
+                    & > i:nth-of-type(3) {
+                        //chimney
+                        &:after {
+                            left: 6rem;
+                            transform: rotate(3deg);
+                        }
+                    }
+                    //smoke
+                    & > i:nth-of-type(1) {
+                        left: 10rem;
+                    }
+
+                    & > i:nth-of-type(5):after {
+                        left: -2.5rem;
+                        transform: rotate(-3deg);
+                    }
+                }
+            }
+        }
+
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i}.col#{$x - 3}:checked ~,
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i}.col#{$x - 5}:checked ~ {
+            div > div > shed > .row#{$i}.col#{$x} {
+                //chimney // smoke
+                & > i:nth-of-type(3):after, & > i:nth-of-type(1) {
+                    display: none;
+                }
+            }
+        }
+
+        //ladder
+        .hs.row#{$i}.col#{$x}:checked ~ .hs.row#{$i}.col#{$x - 3}:checked ~ {
+            div > div > shed > .row#{$i}.col#{$x} {
+                & > i:nth-of-type(5):after {
+                    left: 10rem;
+                    transform: rotate(2deg);
+                }
+            }
+        }
+    }
+    //bridge
+
+    .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ {
+        div > div > shed > .row#{$i}.col1 {
+            & > i:nth-of-type(5):before {
+                display: block;
+                width: 210%;
+            }
+        }
+    }
+
+    .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:checked ~ div > div > shed > .row#{$i}.col1,
+    .hs.shed.row#{$i}.col2:checked ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ div > div > shed > .row#{$i}.col2 {
+        & > i:nth-of-type(5):before {
+            display: block;
+            width: 110%;
+        }
+    }
+
+    // change bridge to rope
+    .hs.row#{$i + 1}.col2:checked ~ .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:checked ~ div > div > shed > .row#{$i}.col1,
+    .hs.row#{$i + 1}.col3:checked ~ .hs.shed.row#{$i}.col2:checked ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ div > div > shed > .row#{$i}.col2,
+    .hs.row#{$i + 1}.col3:checked ~ .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ div > div > shed > .row#{$i}.col1,
+    .hs.row#{$i + 1}.col2:checked ~ .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ div > div > shed > .row#{$i}.col1,
+    .hs.shed.row#{$i + 1}.col1:checked ~ .hs.shed.row#{$i}.col1:checked ~ .hs.shed.row#{$i}.col2:not(:checked) ~ .hs.shed.row#{$i}.col3:checked ~ div > div > shed > .row#{$i}.col1,
+    .hs.shed.row#{$i + 1}.col2:checked ~ .hs.shed.row#{$i}.col2:checked ~ .hs.shed.row#{$i}.col3:not(:checked) ~ .hs.shed.row#{$i}.col4:checked ~ div > div > shed > .row#{$i}.col2 {
+        & > i:nth-of-type(5):before {
+            top: 1rem;
+            border: none;
+        }
+    }
+}

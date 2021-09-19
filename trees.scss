@@ -1,0 +1,176 @@
+tree:nth-of-type(1) {
+    width: 10rem;
+    height: 60.5rem;
+    top: -10rem;
+    transform: skew(-2deg);
+    border-radius: 0 50% 2rem 0;
+    box-shadow: .5rem 0 0 $tre1,1rem 0 0 $tre3, 3rem 0 0 $tre1, 5rem 0 0 $tre2;
+
+    &:before {
+        left: 16rem;
+        width: 10rem;
+        height: 60.5rem;
+        box-shadow: -2rem 0 0 $tre2, -3rem 0 0 $tre1, -4rem 0 0 $tre2;
+        border-radius: 50% 0 0 2rem;
+        transform: skew(4deg);
+    }
+
+    &:after {
+        top: -4rem;
+        width: 10rem;
+        height: 5rem;
+        border-radius: 60% 60% 40% 40% / 70% 70% 40% 40%;
+        background: $r4;
+        box-shadow: inset -1rem -1rem 1rem $vls, //
+        13rem 0 0 -.2rem $vls, //
+        9rem 1rem 0 -1rem $vls, //
+        -2rem -3rem 0 1rem $vls, //
+        5rem -5rem 0 -.5rem $vls, //
+        7rem -4rem 0 $vls, //
+        11rem -2rem 0 -.5rem $vls, //
+        //
+        12rem 0 0 -.2rem $r42, //
+        8rem 1rem 0 -1rem $r42, //
+        -3rem -3rem 0 1rem $r41, //
+        4rem -5rem 0 -.5rem $r42, //
+        6rem -4rem 0 $r41, //
+        10rem -2rem 0 -.5rem $r42, //
+    }
+}
+
+tree:nth-of-type(2) {
+    width: 10rem;
+    height: 50.5rem;
+    top: 0;
+    left: 25rem;
+    transform: skew(-3deg);
+    border-radius: 0 50% 2rem 0;
+    box-shadow: .5rem 0 0 $tre1,1rem 0 0 $tre3, 3rem 0 0 $tre1, 5rem 0 0 $tre2;
+
+    &:before {
+        left: 16rem;
+        width: 10rem;
+        height: 50.5rem;
+        box-shadow: -1.5rem 0 0 $tre2, -2.5rem 0 0 $tre1, -3rem 0 0 $tre2;
+        border-radius: 50% 0 0 2rem;
+        transform: skew(4deg);
+    }
+
+    &:after {
+        top: -4rem;
+        left: 17rem;
+        width: 10rem;
+        height: 5rem;
+        border-radius: 60% 60% 40% 40% / 70% 70% 40% 40%;
+        background: $r4;
+        box-shadow: inset -1rem -1rem 1rem $vls, //
+        -19rem 1rem 0 -.2rem $vls, //
+        -14rem -4rem 0 -1rem $vls, //
+        -13rem -1rem 0 1rem $vls, //
+        -1rem -4rem 0 -.5rem $vls, //
+        -4rem -1rem 0 $vls, //
+        -21rem -2rem 0 -.5rem $vls, //
+        -7rem -5rem 0 1rem $vls, //
+        //
+        -20rem 1rem 0 -.2rem $r42, //
+        -15rem -4rem 0 -1rem $r42, //
+        -15rem -1rem 0 1rem $r41, //
+        -2rem -4rem 0 -.5rem $r42, //
+        -5rem -1rem 0 $r41, //
+        -22rem -2rem 0 -.5rem $r42, //
+        -8rem -5rem 0 1rem $r41, //
+    }
+}
+
+tree i:nth-of-type(1) {
+    &, &:before, &:after {
+        width: 2.5rem;
+        height: .5rem;
+        background: lighten($r4,10%);
+        border-radius: 0 0 100% 100%;
+        top: -5rem;
+        filter: drop-shadow(3rem 1.5rem 0 $r43) drop-shadow(1.5rem 2.5rem 0 $r43);
+        z-index: 1;
+        left: -3rem;
+        opacity: .5;
+    }
+
+    &:before {
+        left: 6rem;
+        top: -1rem;
+        filter: drop-shadow(2rem 1.5rem 0 $r43);
+    }
+
+    &:after {
+        left: 15rem;
+        top: -1.5rem;
+        filter: drop-shadow(2.5rem .5rem 0 $r43) drop-shadow(1rem 2rem 0 $r43);
+    }
+}
+
+tree:nth-of-type(2) i:nth-of-type(1) {
+    &:after {
+        left: 20rem;
+    }
+}
+
+tree i:nth-of-type(2) {
+    &, &:before, &:after {
+        width: .5rem;
+        height: .25rem;
+        background: $r41;
+        border-radius: 100% 0 100% 0;
+        top: -2rem;
+    }
+
+    &:before {
+        left: 8rem;
+        top: -1rem;
+    }
+
+    &:after {
+        left: 20rem;
+        top: 1.5rem;
+    }
+}
+
+[type="radio"]:focus ~ div > div > tree {
+    i:nth-of-type(1), &:after {
+        animation: shake .3s ease-in-out;
+    }
+}
+
+[type="radio"]:focus ~ div > div > tree > i:nth-of-type(2) {
+    & {
+        animation: fall 5s ease-in-out;
+    }
+
+    &:before {
+        animation: fall 10s ease-in-out;
+    }
+
+    &:before {
+        animation: fall 5s ease-in-out;
+    }
+}
+
+@keyframes shake {
+    40% {
+        transform: translate3d(0,.5rem,0);
+    }
+
+    60% {
+        transform: translate3d(0,-.25rem,0);
+    }
+
+    80% {
+        transform: translate3d(0,.15rem,0);
+    }
+}
+
+@keyframes fall {
+    100% {
+        transform: translate3d(0,15rem,0);
+        opacity: 0;
+    }
+}

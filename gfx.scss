@@ -1,0 +1,93 @@
+#graphics {
+    top: 1rem;
+    left: auto;
+    right: 1rem;
+    font-family: Telefon,Sans-Serif;
+    font-size: 1.4rem;
+    z-index: 1000;
+    letter-spacing: .1rem;
+    color: #fff;
+    line-height: 1.5;
+    max-height: 2.5rem;
+    overflow: hidden;
+
+    label {
+        display: flex;
+        align-content: center;
+        justify-content: flex-end;
+        gap: .5rem;
+        padding: .5rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: box-shadow .2s ease-in-out;
+        box-shadow: 0 0 0 1rem $none, inset 0 0 0 0 rgba(#fff,.2);
+
+        &:not(:nth-of-type(1)):hover {
+            box-shadow: 0 0 0 0 rgba(#fff,.2), inset 0 0 0 2rem rgba(#fff,.2);
+        }
+    }
+
+    * {
+        position: static;
+    }
+}
+
+#gfxmenu:checked ~ #graphics {
+    max-height: 10rem;
+}
+
+#poor:checked ~ colour > div > div > house > label > i:nth-of-type(1),
+#poor:checked ~ colour > div > div > shed > label > i:nth-of-type(1),
+#poor:checked ~ colour > div > lens,
+#poor:checked ~ colour > water:before,
+#poor:checked ~ colour water:after {
+    display: none;
+}
+
+#poor:checked ~ colour > div > div.main {
+    -webkit-box-reflect: none;
+}
+
+#poor:checked ~ sky > time {
+    opacity: 0;
+}
+
+#poor:checked ~ text > welldone, #poor:checked ~ text > gameover {
+    box-shadow: none;
+}
+
+#good:checked ~ x > [for="good"], #poor:checked ~ x > [for="poor"] {
+    box-shadow: 0 0 0 0 rgba(#fff,.1), inset 0 0 0 2rem rgba(#fff,.1);
+
+    &:before {
+        content: '✓';
+        position: static;
+    }
+}
+
+#poor:checked ~ colour > div > div > shed > label,
+#poor:checked ~ colour > div > div > house > label {
+    &:after, & *:after {
+        animation: none !important;
+    }
+
+    &:before, & *:before {
+        animation: none !important;
+    }
+}
+
+[for="gfxmenu"]:after {
+    border-bottom: .1rem solid #fff;
+    border-right: .1rem solid #fff;
+    transform: rotate(45deg) scaleY(1);
+    position: relative;
+    width: .6rem;
+    height: .6rem;
+    margin-left: .4rem;
+    top: .5rem;
+    transition: all .2s ease-in-out;
+}
+
+#gfxmenu:checked ~ x > [for="gfxmenu"]:after {
+    transform: rotate(-45deg) scaleY(-1);
+}

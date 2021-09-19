@@ -1,0 +1,310 @@
+colour > *:not(.lh):not(text) {
+    filter: hue-rotate(0deg) brightness(100%);
+    animation: set $timer linear infinite;
+}
+
+@media screen and (max-device-width: 480px) {
+    colour > *:not(.lh):not(text) {
+        animation: none;
+    }
+}
+
+@keyframes set {
+    15%,85% {
+        filter: hue-rotate(0deg) brightness(100%);
+    }
+
+    30%,70% {
+        filter: hue-rotate(-20deg) brightness(10%);
+    }
+
+    40%,60% {
+        filter: hue-rotate(-40deg) brightness(50%);
+    }
+}
+
+@function stars ($a) {
+    $random2: #f9b9c8;
+    $value: '#{random(100 + 100)}vmin #{random(60)}vmin 0 -.#{random(2)}rem ' + $random2;
+
+    @for $i from 2 through $a {
+        $random2: adjust-hue(#8beffc,random(360));
+        $value: '#{$value} , #{random(100 + 100)}vmin #{random(60)}vmin 0 -.#{random(2)}rem ' + $random2;
+    }
+
+    @return unquote($value);
+}
+
+$stars: stars(50);
+
+stars {
+    width: 220rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    animation: stars $timer linear infinite;
+    -webkit-box-reflect: below -50rem;
+    opacity: 0;
+    z-index: 0;
+
+    &:before {
+        width: .5rem;
+        height: .5rem;
+        box-shadow: $stars;
+        border-radius: 50%;
+        content: '';
+        position: absolute;
+        top: 5rem;
+        left: 5rem;
+    }
+
+    i {
+        &:before, &:after {
+            width: .5rem;
+            height: .5rem;
+            top: 40rem;
+            left: 40rem;
+            background: #fff;
+            border-radius: 50%;
+            animation: stars 1s linear infinite;
+            opacity: .5;
+            box-shadow: 0 0 1rem #fff;
+        }
+
+        &:after {
+            top: 20rem;
+            left: 180rem;
+            animation: stars 1s .5s linear infinite;
+            background: #f9b9c8;
+        }
+    }
+}
+
+sky {
+    width: 100%;
+    height: 78.5rem;
+    overflow: hidden;
+    -webkit-box-reflect: below 0;
+    z-index: 0;
+
+    &:before, &:after {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(#323248 10%,#FBD447, #D8480F);
+        opacity: 0;
+        animation: sky $timer linear infinite;
+    }
+
+    &:after {
+        background: linear-gradient(#19043f,#1a0f6c );
+    }
+}
+
+time {
+    pointer-events: none;
+
+    &, sun {
+        width: 170rem;
+        height: 170rem;
+        left: -100%;
+        right: -100%;
+        top: -100%;
+        bottom: -170%;
+        margin: auto;
+    }
+
+    & sun {
+        bottom: -100%;
+        transform: rotate(0deg);
+        z-index: 1;
+        animation: sun $timer linear infinite;
+        filter: blur(1rem) brightness(400%);
+
+        &:before {
+            width: 25rem;
+            height: 25rem;
+            border-radius: 50%;
+            background: radial-gradient($r1,$base);
+            right: 0;
+            margin: auto;
+            transform: rotate(0deg);
+        }
+        //moon
+        &:after {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+            box-shadow: inset 0 2rem 0 #5a4e38;
+            background: rgba(#000,.1);
+            left: 60%;
+            top: auto;
+            bottom: 0;
+            transform: rotate(0deg);
+            z-index: 1;
+        }
+    }
+}
+
+@media (max-width: 500px) {
+    time, input {
+        display: none;
+    }
+}
+
+div.ss lens {
+    top: 20rem;
+    left: 70rem;
+    animation: lensflair $timer linear infinite;
+    width: 60rem;
+    height: 60rem;
+    filter: brightness(150%);
+    transform: rotate(0);
+    opacity: 0;
+
+    &:before {
+        width: 60rem;
+        height: 60rem;
+        border-radius: 50%;
+        top: 0;
+        right: -50%;
+        left: -50%;
+        margin: auto;
+        box-shadow: 0 70rem 0 -20rem yellow, //
+        0 50rem 0 -25rem yellow, //
+        0 100rem 0 5rem #f437c5, //
+        inset 0 0 3rem $sun;
+        border: 1rem solid $sun;
+    }
+
+    &:after {
+        width: 100rem;
+        height: 100rem;
+        border-radius: 50%;
+        top: 140rem;
+        right: -50%;
+        left: -50%;
+        margin: auto;
+        border: 1rem solid yellow;
+        box-shadow: 0 0 3rem red, inset 0 0 3rem blue;
+    }
+}
+
+@keyframes lensflair {
+    20%, 30%, 70%, 80% {
+        opacity: 0;
+    }
+
+    25%,75% {
+        opacity: .05;
+    }
+
+    100% {
+        transform: rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes sun {
+    20%, 80% {
+        filter: blur(1rem) brightness(390%);
+    }
+
+    27%, 73% {
+        filter: blur(1rem) brightness(200%);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes stars {
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes sky {
+    20%,85% {
+        filter: brightness(100%);
+        opacity: 0;
+    }
+
+    30%,70% {
+        filter: brightness(100%);
+        opacity: 1;
+    }
+
+    40%,60% {
+        filter: brightness(20%);
+        opacity: 1;
+    }
+}
+
+sunset {
+    width: 150%;
+    height: 20rem;
+    left: -25%;
+    top: 60rem;
+    background: radial-gradient(farthest-side at 70% 100%, #ff6400, $none);
+    filter: blur(1rem);
+    -webkit-box-reflect: below 0;
+    animation: sunset $timer linear infinite;
+    opacity: 0;
+    transform: translate3d(0,20rem,0);
+
+    &:before {
+        width: 100rem;
+        height: 50rem;
+        left: 55%;
+        top: -10rem;
+        border-radius: 50%;
+        background: radial-gradient( #ff6400, $none);
+        opacity: .1;
+    }
+
+    &:after {
+        width: 50rem;
+        height: 25rem;
+        left: 65%;
+        top: 5rem;
+        border-radius: 50%;
+        background: radial-gradient( #fffd91, $none);
+        opacity: .1;
+    }
+}
+
+@keyframes sunset {
+    28%,75% {
+        opacity: 1;
+        transform: translate3d(0,0,0);
+    }
+
+    20%,35%,70%,80% {
+        opacity: 0;
+        transform: translate3d(0,20rem,0);
+    }
+}
+
+text:nth-of-type(2) {
+    animation: gameover $timer linear;
+}
+
+@keyframes gameover {
+    34.8% {
+        transform: scale(0);
+        z-index: 0;
+        display: block;
+        opacity: 0;
+    }
+
+    35%, 100% {
+        transform: scale(1);
+        z-index: 410;
+        transition: all .5s 1.5s ease-in-out;
+        opacity: 1;
+    }
+}
